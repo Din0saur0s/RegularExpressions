@@ -32,7 +32,7 @@ namespace RegularExpressions1
 
     }     */
 
-      string[] text ={ "(555)555-1212", "(555) 555-1212", "555-555-1212", "5555551212", "01111", "01111-1111", "47", "111-11-1111" };
+      string[] text = { "(555)555-1212", "(555) 555-1212", "555-555-1212", "5555551212", "01111", "01111-1111", "47", "111-11-1111" };
 
       static bool IsPhone(string s)
       {
@@ -44,12 +44,19 @@ namespace RegularExpressions1
         return Regex.IsMatch(s, @"^\d{5}(\-\d{4})?$");
       }
 
+      static string ReformatPhone(string s)
+      {
+        Match m = Regex.Match(s, @"^\(?(\d{3})\)?[\s\-]?(\d{3})\-?(\d{4})$"); return String.Format("({0}) {1}-{2}", m.Groups[1], m.Groups[2], m.Groups[3]);
+      }
+
       foreach (string s in text)
       {
-        if (IsPhone(s)) Console.WriteLine(s + " is a phone number");
-        else if (IsZip(s)) Console.WriteLine(s + " is a zip code");
+        if (IsPhone(s)) Console.WriteLine(ReformatPhone(s) + " is a phone number");
+        else
+        if (IsZip(s))
+          Console.WriteLine(s + " is a zip code");
         else Console.WriteLine(s + " is unknown");
-      }
+
 
 
       }
@@ -57,3 +64,4 @@ namespace RegularExpressions1
 
     }
   }
+}
